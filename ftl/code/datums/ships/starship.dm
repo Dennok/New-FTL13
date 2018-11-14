@@ -18,26 +18,30 @@
 	var/prefix = "ftl/_maps/ships/"
 	var/combat_map = "combat/generic_ship.dmm"
 
-/datum/starship/New(turf/T, var/ship_spawn_slot)
+/datum/starship/New(turf/T, var/obj/effect/landmark/ship_spawn/new_ship_spawn_slot)
 	. = ..()
 	unique_id = "[name] [++ship_count]"
 	SSships.currentships[unique_id] = src
 
-	var/map = "[prefix][combat_map]"
-	template = new(map)
+	template = new("[prefix][combat_map]")
 	var/list/bounds = template.load(T, TRUE)
 
 	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
 
-	src.ship_spawn_slot = ship_spawn_slot
+	src.ship_spawn_slot = new_ship_spawn_slot
 	SSships.ShipSpawnLocations[ship_spawn_slot] = FALSE //This slot is taken now, cya chump.
 
-	var/list/shipareas
+	var/list/shipareas = list()
+	var/list/Mshipareas = list()
+
 	for(var/turf/open/indestructible/ftlfloor/floor in turfs)
 		floor.unique_id = unique_id
 
-		var/area/ftl/shiproom/A = get_area(floor)
+		var/area/ftl/shiproom/A = floor.loc
+
+		Mshipareas |= floor.loc
+
 		if(shiprooms.Find(A))
 			continue
 
