@@ -59,7 +59,7 @@
 			var/datum/shiproom/engine/x = new(src)
 			shiprooms[Atype] = x
 		else
-			var/datum/shiproom/x = new(src)
+			var/datum/shiproom/empty/x = new(src)
 			shiprooms[Atype] = x
 
 
