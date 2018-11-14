@@ -33,7 +33,7 @@
 	src.ship_spawn_slot = ship_spawn_slot
 	SSships.ShipSpawnLocations[ship_spawn_slot] = FALSE //This slot is taken now, cya chump.
 
-	var/shipareas
+	var/list/shipareas
 	for(var/turf/open/indestructible/ftlfloor/floor in turfs)
 		floor.unique_id = unique_id
 
