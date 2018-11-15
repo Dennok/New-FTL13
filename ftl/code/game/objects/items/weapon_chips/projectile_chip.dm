@@ -11,14 +11,16 @@
 /obj/item/weapon_chip/projectile/proc/SpawnProjectile() //Projectile that flies out of the gun and dissapears, exists for visual aesthetic
 	var/obj/item/projectile/ship_projectile/A = new(weapon.loc)
 	A.icon_state =  projectile_icon
-	A.setDir(EAST)
 	A.pixel_x = 32
 	A.pixel_y = 12
 	A.yo = 0
 	A.xo = 20
 	A.starting = weapon
-	A.fire(dir2angle(weapon.dir))
+	P.firer = weapon
+	P.fire(dir2angle(weapon.dir))
 	message_admins("pew")
+	playsound(get_turf(weapon), attack_info.fire_sound, 50, TRUE)
+	return P
 
 	playsound(weapon, attack_info.fire_sound, 50, 1)
 
